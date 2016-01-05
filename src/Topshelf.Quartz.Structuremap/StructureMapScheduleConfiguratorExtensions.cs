@@ -39,7 +39,7 @@ namespace Topshelf.Quartz.StructureMap
 					c.For<IJobFactory>().Use<SimpleStructureMapJobFactory>();
 
 				c.For<ISchedulerFactory>().Use<StructureMapSchedulerFactory>();
-				c.For<IScheduler>().Use(ctx => ctx.GetInstance<ISchedulerFactory>().GetScheduler()).Singleton();
+                c.For<IScheduler>().Singleton().Use(ctx => ctx.GetInstance<ISchedulerFactory>().GetScheduler());
 			});
 
 			ScheduleJobServiceConfiguratorExtensions.SchedulerFactory = () => container.GetInstance<IScheduler>();

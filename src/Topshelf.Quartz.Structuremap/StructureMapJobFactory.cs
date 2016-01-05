@@ -54,10 +54,10 @@ namespace Topshelf.Quartz.StructureMap
 				var nestedContainer = _container.GetNestedContainer();
 				job = nestedContainer.GetInstance(jobType) as IJob;
 				Containers.TryAdd(job.GetHashCode(), nestedContainer);
-				Debug.WriteLine("Start job({1}) in thread - {0}. Containers count - {2}",
+				Debug.WriteLine(string.Format("Start job({1}) in thread - {0}. Containers count - {2}",
 					Thread.CurrentThread.ManagedThreadId,
 					job.GetHashCode(),
-					Containers.Count);
+					Containers.Count));
 			}
 			catch (Exception ex) {
 				Debug.WriteLine("Exception on Starting job - ", (ex.InnerException ?? ex).Message);
@@ -79,13 +79,13 @@ namespace Topshelf.Quartz.StructureMap
 				if (container == null) { Debug.WriteLine("Container is null"); return; }
 				container.Dispose();
 			} else {
-				Debug.WriteLine("Can't find ({0})", job.GetHashCode());
+				Debug.WriteLine(string.Format("Can't find ({0})", job.GetHashCode()));
 			}
 
-			Debug.WriteLine("Return job({1}) in thread - {0}. Containers count - {2}",
+			Debug.WriteLine(string.Format("Return job({1}) in thread - {0}. Containers count - {2}",
 				Thread.CurrentThread.ManagedThreadId,
 				job.GetHashCode(),
-				Containers.Count);
+				Containers.Count));
 		}
 	}
 }

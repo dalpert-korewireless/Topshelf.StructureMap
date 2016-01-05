@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using Quartz;
 using StructureMap;
+using StructureMap.Pipeline;
 using Topshelf.StructureMap;
 
 namespace Topshelf.Quartz.StructureMap.Sample
@@ -13,7 +14,7 @@ namespace Topshelf.Quartz.StructureMap.Sample
         static void Main() {
             HostFactory.Run(c => {
                 var container = new Container(cfg => {
-                    cfg.For<IDependency>().Use<Dependency>().AlwaysUnique();
+                    cfg.For<IDependency>().LifecycleIs(new UniquePerRequestLifecycle()).Use<Dependency>();
                     cfg.For<IScopeDependency>().Use<ScopeDependency>();
                 });
                 c.UseStructureMap(container);
